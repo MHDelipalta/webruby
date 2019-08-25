@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2019_05_07_220640) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "kitaps", force: :cascade do |t|
     t.string "isim"
     t.text "ozet"
@@ -22,12 +25,12 @@ ActiveRecord::Schema.define(version: 2019_05_07_220640) do
     t.string "resim_content_type"
     t.bigint "resim_file_size"
     t.datetime "resim_updated_at"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_kitaps_on_user_id"
   end
 
   create_table "likes", force: :cascade do |t|
-    t.integer "kitap_id"
+    t.bigint "kitap_id"
     t.integer "sayi"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -52,4 +55,6 @@ ActiveRecord::Schema.define(version: 2019_05_07_220640) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "kitaps", "users"
+  add_foreign_key "likes", "kitaps"
 end
